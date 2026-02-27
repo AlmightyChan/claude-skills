@@ -25,6 +25,8 @@ version: 0.1.0
 
 # Plan (Beta — Agent Teams)
 
+- **Agents:** orchestrator-invoked
+
 Create a detailed implementation plan based on the user's requirements, targeting the **agent teams** execution model. Analyze the request, think through the implementation approach, and save a comprehensive specification document to `docs/plan/<name-of-plan>.md` that can be used as a blueprint for development work. Follow the `Instructions` and work through the `Workflow`.
 
 This is a beta variant of the `plan` skill. It produces plans compatible with `execute-beta`, which uses `TeamCreate`/`SendMessage` for inter-agent coordination instead of direct `Task` tool dispatch.
@@ -34,7 +36,7 @@ This is a beta variant of the `plan` skill. It produces plans compatible with `e
 USER_PROMPT: $ARGUMENTS
 PLAN_OUTPUT_DIRECTORY: `docs/plan/`
 TEAM_MEMBERS: `/Users/ethanmuna/.claude/agents/*.md`
-GENERAL_PURPOSE_AGENT: `general-purpose`
+AGENT_ROSTER: Select the most appropriate agent from the 6 existing agents: builder, critic, validator, researcher, designer, auditor
 
 ## Instructions
 
@@ -284,7 +286,7 @@ Spawn teammates in waves matching task dependency batches. This mitigates compac
 ### Team Members
 <list the team members needed -- use the agent types appropriate to the plan>
 
-Available agent types: builder, validator, researcher, critic, designer, specialist
+Available agent types: builder, validator, researcher, critic, designer, auditor
 
 - Builder
   - Name: <unique name for this builder>
@@ -324,15 +326,6 @@ Available agent types: builder, validator, researcher, critic, designer, special
   - Model: sonnet
   - Spawn Wave: <N>
   - Spawn Prompt: See execute-beta supporting-files/teammate-spawn-prompts.md (non-cycling template)
-- Specialist (optional -- for domain-specific tasks requiring loaded skills)
-  - Name: <unique name>
-  - Role: <specialist focus>
-  - Agent Type: specialist
-  - Specialist Skills: <skill names to load, e.g., security-review, devops-review>
-  - Model: sonnet
-  - Spawn Wave: <N>
-  - Spawn Prompt: See execute-beta supporting-files/teammate-spawn-prompts.md (non-cycling template)
-
 - <continue with additional team members as needed>
 
 ## Step by Step Tasks
@@ -391,17 +384,17 @@ Available agent types: builder, validator, researcher, critic, designer, special
 - If conflicts found: report each conflict with file:line pairs from both sides
 - **Expected Output**: Type registry document (inline in report) plus PASS/FAIL verdict
 
-<Non-builder/validator tasks run once without validation cycling. Use these patterns when the plan includes research, design, critique, or specialist phases:>
+<Non-builder/validator tasks run once without validation cycling. Use these patterns when the plan includes research, design, critique, or auditor phases:>
 
 ### N-2. <Research/Design/Critique/Specialist Task> (single-run, no validator pair)
 - **Task ID**: <unique kebab-case identifier>
 - **Depends On**: <Task ID(s) or "none">
 - **Assigned To**: <team member name>
-- **Agent Type**: <researcher | critic | designer | specialist>
+- **Agent Type**: <researcher | critic | designer | auditor>
 - **Parallel**: <true/false>
 - **Validate**: false
 - **Spawn Wave**: <N>
-- **Specialist Skills**: <skill names, only for specialist agent type>
+- **Skills**: <skill names to load for this task, if applicable>
 - <specific action>
 - <specific action>
 - **Expected Output**: <document, verdict, design artifact, or findings>
@@ -464,7 +457,7 @@ IMPORTANT: **PLANNING ONLY** - Do not execute, build, or deploy. Output is a pla
 1. Analyze Requirements - Parse USER_PROMPT (or read PRD/pitch file) to understand the core problem and desired outcome
 2. Understand Codebase - Directly understand existing patterns, architecture, and relevant files. **Detect the project directory**: If the input document is inside `projects/{project}/docs/`, use `projects/{project}` as the project directory. Otherwise, check if the document references a specific project (by name or path) and verify `projects/{name}/` exists. If no project context can be determined, use `basecamp`. Record this in the plan's `## Project Directory` section.
 3. Design Solution - Develop technical approach including architecture decisions and implementation strategy
-4. Define Team Members - Identify from `/Users/ethanmuna/.claude/agents/*.md` or use `general-purpose`. Document in plan. Assign each to a spawn wave.
+4. Define Team Members - Identify from `/Users/ethanmuna/.claude/agents/*.md`, selecting the most appropriate agent from the roster (builder, critic, validator, researcher, designer, auditor). Document in plan. Assign each to a spawn wave.
 5. Define Step by Step Tasks - Write tasks with IDs, dependencies, assignments, and spawn wave numbers. Interleave builder/validator pairs for every code-producing task. Document in plan.
 5.5. Context Budget Check - After task decomposition, estimate the total context budget:
    a. Read `supporting-files/phasing-guide.md` for unit costs and threshold.

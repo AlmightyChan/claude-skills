@@ -25,6 +25,8 @@ version: 0.1.0
 
 # Plan
 
+- **Agents:** orchestrator-invoked
+
 Create a detailed implementation plan based on the user's requirements. Analyze the request, think through the implementation approach, and save a comprehensive specification document to `docs/plan/<name-of-plan>.md` that can be used as a blueprint for development work. Follow the `Instructions` and work through the `Workflow`.
 
 ## Variables
@@ -32,7 +34,7 @@ Create a detailed implementation plan based on the user's requirements. Analyze 
 USER_PROMPT: $ARGUMENTS
 PLAN_OUTPUT_DIRECTORY: `docs/plan/`
 TEAM_MEMBERS: `/Users/ethanmuna/.claude/agents/*.md`
-GENERAL_PURPOSE_AGENT: `general-purpose`
+AGENT_ROSTER: Select the most appropriate agent from the 6 existing agents: builder, critic, validator, researcher, designer, auditor
 
 ## Instructions
 
@@ -298,7 +300,7 @@ IMPORTANT: **PLANNING ONLY** - Do not execute, build, or deploy. Output is a pla
 1. Analyze Requirements - Parse USER_PROMPT (or read PRD/pitch file) to understand the core problem and desired outcome
 2. Understand Codebase - Directly understand existing patterns, architecture, and relevant files. **Detect the project directory**: If the input document is inside `projects/{project}/docs/`, use `projects/{project}` as the project directory. Otherwise, check if the document references a specific project (by name or path) and verify `projects/{name}/` exists. If no project context can be determined, use `basecamp`. Record this in the plan's `## Project Directory` section.
 
-   **Project Characteristic Detection**: During codebase analysis, detect technology signals to inform specialist task generation:
+   **Project Characteristic Detection**: During codebase analysis, detect technology signals to inform review task generation:
 
    | Signal | Detection Method | Review Skill |
    |--------|-----------------|--------------|
@@ -313,11 +315,11 @@ IMPORTANT: **PLANNING ONLY** - Do not execute, build, or deploy. Output is a pla
    *Tier 2 skills -- generate tasks only when the skill exists on disk (check with `ls ~/.claude/skills/{name}/SKILL.md`).
 
    Record detected characteristics in the plan under `## Project Topology`.
-   When generating specialist/review tasks, reference `.claude/rules/subagent-skill-dispatch.md` for the skill-to-agent mapping.
+   When generating review tasks, reference `.claude/rules/subagent-skill-dispatch.md` for the skill-to-agent mapping.
 
    **Provisioning**: After companion document detection, populate the `## Provisioning` section of the plan with: (a) the list of companion documents found (paths and types), and (b) the project CLAUDE.md and decision log templates from `supporting-files/provisioning-templates.md`. If no companion documents were found, the Provisioning section should still be included with an empty Reference Documents list.
 3. Design Solution - Develop technical approach including architecture decisions and implementation strategy
-4. Define Team Members - Identify from `/Users/ethanmuna/.claude/agents/*.md` or use `general-purpose`. Document in plan.
+4. Define Team Members - Identify from `/Users/ethanmuna/.claude/agents/*.md`, selecting the most appropriate agent from the roster (builder, critic, validator, researcher, designer, auditor). Document in plan.
 5. Define Step by Step Tasks - Write tasks with IDs, dependencies, assignments. Interleave builder/validator pairs for every code-producing task. Document in plan.
 5.5. Context Budget Check - After task decomposition, estimate the total context budget:
    a. Read `supporting-files/phasing-guide.md` for unit costs and threshold.
@@ -466,7 +468,7 @@ Tracks decisions that diverge from or extend the original plan and specs. Writte
 ### Team Members
 <list the team members needed -- use the agent types appropriate to the plan>
 
-Available agent types: builder, validator, researcher, critic, designer, specialist
+Available agent types: builder, validator, researcher, critic, designer, auditor
 
 - Builder
   - Name: <unique name for this builder>
@@ -496,13 +498,6 @@ Available agent types: builder, validator, researcher, critic, designer, special
   - Role: <design focus>
   - Agent Type: designer
   - Resume: false
-- Specialist (optional -- for domain-specific tasks requiring loaded skills)
-  - Name: <unique name>
-  - Role: <specialist focus>
-  - Agent Type: specialist
-  - Specialist Skills: <skill names to load, e.g., security-review, devops-review>
-  - Resume: false
-
 - <continue with additional team members as needed>
 
 ## Step by Step Tasks
@@ -558,16 +553,16 @@ Available agent types: builder, validator, researcher, critic, designer, special
 - If conflicts found: report each conflict with file:line pairs from both sides
 - **Expected Output**: Type registry document (inline in report) plus PASS/FAIL verdict
 
-<Non-builder/validator tasks run once without validation cycling. Use these patterns when the plan includes research, design, critique, or specialist phases:>
+<Non-builder/validator tasks run once without validation cycling. Use these patterns when the plan includes research, design, critique, or auditor phases:>
 
 ### N-2. <Research/Design/Critique/Specialist Task> (single-run, no validator pair)
 - **Task ID**: <unique kebab-case identifier>
 - **Depends On**: <Task ID(s) or "none">
 - **Assigned To**: <team member name>
-- **Agent Type**: <researcher | critic | designer | specialist>
+- **Agent Type**: <researcher | critic | designer | auditor>
 - **Parallel**: <true/false>
 - **Validate**: false
-- **Specialist Skills**: <skill names, only for specialist agent type>
+- **Skills**: <skill names to load for this task, if applicable>
 - <specific action>
 - <specific action>
 - **Expected Output**: <document, verdict, design artifact, or findings>

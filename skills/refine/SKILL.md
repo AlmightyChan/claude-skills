@@ -25,6 +25,8 @@ version: 0.1.0
 
 # Refine
 
+- **Agents:** orchestrator-invoked
+
 Transform a pitch document into a complete technical document. Execute phases sequentially.
 
 ## Variables
@@ -163,7 +165,7 @@ After the researcher returns:
 - For each finding, present to the user with its confidence level: "Research found [X] for section [Y] (confidence: Z) -- incorporate, modify, or skip?"
 - Integrate approved findings into the corresponding sections.
 
-**Failure handling:** If the researcher fails or times out, log the failure to `docs/logs/gotcha-log.md` using the agent entry format (see `.claude/rules/gotcha-capture.md`). Add a note to the document's Open Questions: "Research enrichment unavailable -- consider manual research for [sections]." Proceed without research enrichment.
+**Failure handling:** If the researcher fails or times out, log the failure to `docs/logs/gotcha-log.md` using the agent entry format (see `.claude/rules/capture.md`). Add a note to the document's Open Questions: "Research enrichment unavailable -- consider manual research for [sections]." Proceed without research enrichment.
 
 ---
 
@@ -229,7 +231,7 @@ Dispatch a critic subagent (Task tool, subagent_type: "critic") to review the ge
 - **Convergence:** If the readiness score does not improve between consecutive cycles, stop cycling. Present stalled findings: "Score plateaued at N/10 after M cycles. Remaining findings noted in Open Questions."
 - **Cap:** After cycle 5, proceed regardless of score, noting unresolved issues in Open Questions.
 
-**Failure handling:** If the critic fails or times out, log the failure to `docs/logs/gotcha-log.md` using the agent entry format (see `.claude/rules/gotcha-capture.md`). Proceed to Phase 6 with the Stage 1 completeness check as the sole quality gate. Note in Open Questions: "Critic review could not be completed."
+**Failure handling:** If the critic fails or times out, log the failure to `docs/logs/gotcha-log.md` using the agent entry format (see `.claude/rules/capture.md`). Proceed to Phase 6 with the Stage 1 completeness check as the sole quality gate. Note in Open Questions: "Critic review could not be completed."
 
 ### Stage 3: Designer Review (conditional)
 
@@ -239,7 +241,7 @@ Dispatch a designer subagent (Task tool, subagent_type: "designer") in Quick Mod
 
 Present designer findings alongside the critic's. Designer findings are advisory -- they do not independently block progression.
 
-**Failure handling:** If the designer fails or times out, log the failure to `docs/logs/gotcha-log.md` using the agent entry format (see `.claude/rules/gotcha-capture.md`). Note in Open Questions: "Design review could not be completed -- consider manual design review." Proceed without design enrichment.
+**Failure handling:** If the designer fails or times out, log the failure to `docs/logs/gotcha-log.md` using the agent entry format (see `.claude/rules/capture.md`). Note in Open Questions: "Design review could not be completed -- consider manual design review." Proceed without design enrichment.
 
 ---
 
