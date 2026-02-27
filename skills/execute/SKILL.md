@@ -16,6 +16,8 @@ version: 0.1.0
 
 # Execute
 
+- **Agents:** orchestrator-invoked
+
 Read and execute the implementation plan at `PATH_TO_PLAN`.
 
 ## Variables

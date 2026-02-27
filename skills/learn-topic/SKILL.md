@@ -6,6 +6,8 @@ version: 0.1.0
 
 # Learn Topic
 
+- **Agents:** researcher
+
 ## Overview
 
 Structured research methodology for building comprehensive understanding of a topic. Uses progressive discovery (broad to focused to deep), weighted source quality scoring, and just-in-time content extraction. Adapted from the learn-agent's research workflow.

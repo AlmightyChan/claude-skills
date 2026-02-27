@@ -6,6 +6,8 @@ version: 0.1.0
 
 # Drift Detection
 
+- **Agents:** critic, researcher
+
 ## Overview
 
 Cross-reference documented plans against implementation reality to identify drift, gaps, and misalignment. Produces brutally specific, actionable findings -- not vague observations.

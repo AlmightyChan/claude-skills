@@ -6,6 +6,8 @@ version: 0.1.0
 
 # Performance Review
 
+- **Agents:** auditor
+
 ## Overview
 
 Performance-focused code review targeting common patterns that cause latency, memory issues, or scalability bottlenecks. Findings are grounded in specific code patterns, not speculative optimization.

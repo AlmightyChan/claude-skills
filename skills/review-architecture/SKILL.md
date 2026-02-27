@@ -6,6 +6,8 @@ version: 0.1.0
 
 # Architecture Review
 
+- **Agents:** auditor, critic
+
 ## Overview
 
 Architecture-level review focused on structural health: boundaries, layering, coupling, and pattern consistency. This review examines relationships between modules, not individual code quality.

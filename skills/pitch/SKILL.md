@@ -21,6 +21,8 @@ version: 0.1.0
 
 # Pitch
 
+- **Agents:** orchestrator-invoked
+
 Shape a new idea into a lightweight viability assessment. Follow the phases below in order.
 
 ## Variables

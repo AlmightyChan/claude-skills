@@ -7,6 +7,8 @@ version: 0.1.0
 
 # Configuring an MCP Server
 
+- **Agents:** builder
+
 When adding an MCP server, follow this complete process:
 
 ## 0. Research Official Documentation

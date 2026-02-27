@@ -7,6 +7,8 @@ version: 0.1.0
 
 # Creating a Sub-agent
 
+- **Agents:** builder
+
 When creating an agent, follow this complete process:
 
 ## 0. Research Official Documentation

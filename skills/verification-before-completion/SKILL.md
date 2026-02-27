@@ -6,6 +6,8 @@ version: 0.1.0
 
 # Verification Before Completion
 
+- **Agents:** builder, validator
+
 ## Overview
 
 Claiming work is complete without verification is dishonesty, not efficiency.

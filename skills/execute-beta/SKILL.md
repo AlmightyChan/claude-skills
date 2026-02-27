@@ -16,6 +16,8 @@ version: 0.1.0
 
 # Execute (Beta — Agent Teams)
 
+- **Agents:** orchestrator-invoked
+
 Read and execute the implementation plan at `PATH_TO_PLAN` using Claude Code's experimental agent teams feature. The lead creates a team, spawns builder/validator teammates in waves, and coordinates via the shared task list and SendMessage.
 
 This is a beta variant of the `execute` skill. It uses `TeamCreate`/`SendMessage` for inter-agent coordination instead of direct `Task` tool dispatch.

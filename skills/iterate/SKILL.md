@@ -18,6 +18,8 @@ version: 0.1.0
 
 # Iterate
 
+- **Agents:** orchestrator-invoked
+
 A conversational refinement session for post-build projects. Read the project state, work through issues, track everything in ISSUES.md.
 
 ## Variables

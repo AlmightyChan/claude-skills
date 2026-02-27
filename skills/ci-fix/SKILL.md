@@ -6,6 +6,8 @@ version: 0.1.0
 
 # CI Fix
 
+- **Agents:** builder
+
 ## Overview
 
 Diagnose CI failures by classifying error types, then apply targeted fixes based on the failure category. Adapted from the ci-fixer agent's diagnostic workflow with BASECAMP's quality constraints.

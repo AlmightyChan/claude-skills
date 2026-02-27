@@ -6,6 +6,8 @@ version: 0.1.0
 
 # Sync Docs
 
+- **Agents:** builder
+
 ## Overview
 
 Verify that documentation accurately reflects the current state of the codebase. Detect stale references, outdated examples, missing CHANGELOG entries, and broken cross-references. Adapted from the sync-docs-agent's five-phase methodology.

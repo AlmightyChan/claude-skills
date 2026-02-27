@@ -8,6 +8,8 @@ version: 0.1.0
 
 # GitHub
 
+- **Agents:** builder
+
 Unified skill for all GitHub workflow operations. Determine the operation from $ARGUMENTS and the conversation context, then load the appropriate supporting file.
 
 ## Current git state

@@ -6,6 +6,8 @@ version: 0.1.0
 
 # Test Coverage Review
 
+- **Agents:** validator
+
 ## Overview
 
 Test quality assessment that goes beyond "do tests exist?" to evaluate whether tests actually exercise the code, contain meaningful assertions, and cover edge cases. Merges test coverage checking with test quality evaluation.

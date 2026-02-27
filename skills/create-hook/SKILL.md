@@ -7,6 +7,8 @@ version: 0.1.0
 
 # Creating a Hook
 
+- **Agents:** builder
+
 When creating a hook, follow this complete process:
 
 ## 0. Research Official Documentation

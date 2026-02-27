@@ -6,6 +6,8 @@ version: 0.1.0
 
 # Security Review
 
+- **Agents:** auditor
+
 ## Overview
 
 Systematic security review that checks code against known vulnerability categories. Every finding is grounded in specific code evidence -- no speculative warnings.

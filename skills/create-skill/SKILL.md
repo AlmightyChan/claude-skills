@@ -12,6 +12,8 @@ version: 0.1.0
 
 # Creating a Skill
 
+- **Agents:** builder
+
 When creating a skill, follow this complete process:
 
 ## 0. Research Official Documentation

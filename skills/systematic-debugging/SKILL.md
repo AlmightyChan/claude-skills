@@ -6,6 +6,8 @@ version: 0.1.0
 
 # Systematic Debugging
 
+- **Agents:** builder
+
 ## Overview
 
 Random fixes waste time and create new bugs. Quick patches mask underlying issues.

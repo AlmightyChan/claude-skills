@@ -6,6 +6,8 @@ version: 0.1.0
 
 # Code Quality Review
 
+- **Agents:** auditor
+
 ## Overview
 
 Structured code quality review across six dimensions. Every finding is grounded in specific code evidence with actionable remediation.

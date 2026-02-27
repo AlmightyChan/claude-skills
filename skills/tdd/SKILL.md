@@ -6,6 +6,8 @@ version: 0.1.0
 
 # Test-Driven Development (TDD)
 
+- **Agents:** builder
+
 ## Overview
 
 Write the test first. Watch it fail. Write minimal code to pass.

@@ -6,6 +6,8 @@ version: 0.1.0
 
 # Deslop
 
+- **Agents:** builder
+
 ## Overview
 
 Scan codebases for AI-generated slop patterns and produce a structured report with certainty-based triage. Patterns are categorized by type and severity, with auto-fix strategies for high-certainty items.

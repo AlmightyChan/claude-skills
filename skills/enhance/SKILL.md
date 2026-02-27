@@ -7,6 +7,8 @@ version: 0.1.0
 
 # Enhance
 
+- **Agents:** builder
+
 Analyze Claude Code configuration files for best-practice gaps and produce a structured report with certainty-based triage.
 
 **Core principle:** Configuration quality compounds — a weak CLAUDE.md degrades every session, a bad skill trigger means the skill never fires, and cross-file inconsistencies create silent failures.
