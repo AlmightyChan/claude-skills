@@ -113,7 +113,7 @@ Recommend which servers would benefit this agent and explain why.
 ```yaml
 ---
 name: code-reviewer
-description: Expert code review specialist. Proactively reviews code for quality, security, and maintainability.
+description: Expert code reviewer. Proactively reviews code for quality, security, and maintainability.
 tools: Read, Grep, Glob, Bash
 model: sonnet
 ---

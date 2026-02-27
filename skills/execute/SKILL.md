@@ -145,12 +145,12 @@ PATH_TO_PLAN: $ARGUMENTS
      ---
      ```
      If the decision log file does not exist (provisioning was skipped or plan has no Provisioning section), skip the entry silently.
-   - **Non-cycling agents** (researcher, critic, designer, specialist): These run once and return results. No validator pair. Dispatch, collect output, append to `build-status--{plan-slug}.md`, and proceed to the next task.
+   - **Non-cycling agents** (researcher, critic, designer, auditor): These run once and return results. No validator pair. Dispatch, collect output, append to `build-status--{plan-slug}.md`, and proceed to the next task.
      - **Researcher**: Dispatch with research question. Output is a document written to docs/. Proceed when document exists.
      - **Critic**: Dispatch with artifact to review. Output is a PASS/REVISE/DROP verdict. On REVISE: feed changes back to the builder. On DROP: stop and ask the user.
      - **Designer**: Dispatch with design question. Output is a design document or ADR. Proceed when document exists.
-     - **Specialist**: Dispatch with skill name in the prompt (e.g., "Invoke Skill('security-review') then audit src/auth/"). If the plan specifies `Specialist Skills`, include them in the prompt. Output is a findings report.
-   - **Gotcha relay**: After any agent completes (builder, validator, critic, designer, specialist, researcher), scan output for a `## Gotchas Identified` section. If found, extract entries. Read `docs/logs/gotcha-log.md` and check for duplicates (same title or substantially same description). For each new gotcha, append to the top of the log (below header) using the agent entry format:
+     - **Auditor**: Dispatch with skill name in the prompt (e.g., "Invoke Skill('review-security') then audit src/auth/"). If the plan specifies review skills, include them in the prompt. Output is a findings report.
+   - **Gotcha relay**: After any agent completes (builder, validator, critic, designer, auditor, researcher), scan output for a `## Gotchas Identified` section. If found, extract entries. Read `docs/logs/gotcha-log.md` and check for duplicates (same title or substantially same description). For each new gotcha, append to the top of the log (below header) using the agent entry format:
      ```
      ## [{tag}] {Title}
      **Date:** {YYYY-MM-DD} | **Last Seen:** {YYYY-MM-DD} | **Occurrences:** 1

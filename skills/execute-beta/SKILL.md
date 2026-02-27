@@ -179,13 +179,13 @@ PATH_TO_PLAN: $ARGUMENTS
 
    **5h. File-overlap guard**: Before dispatching a batch of `Parallel: true` builder tasks within a wave, extract the file paths each task will create or modify (from the plan's action items). If any file path appears in more than one task in the batch, those tasks CANNOT run in parallel — serialize them. Only dispatch tasks in parallel whose file sets are completely disjoint. This check is the final gate before parallel dispatch and overrides `Parallel: true` if overlap is detected. Log any overrides in `build-status--{plan-slug}.md`: "File overlap detected: {file} appears in tasks {task-a} and {task-b}. Serializing."
 
-   **5i. Non-cycling agents** (researcher, critic, designer, specialist): These run once and return results via SendMessage. No validator pair. Spawn as teammates, collect output via `SendMessage`, append to `build-status--{plan-slug}.md`, and proceed to the next task.
+   **5i. Non-cycling agents** (researcher, critic, designer, auditor): These run once and return results via SendMessage. No validator pair. Spawn as teammates, collect output via `SendMessage`, append to `build-status--{plan-slug}.md`, and proceed to the next task.
    - **Researcher**: Spawn with research question. Output is a document written to docs/. Proceed when the teammate reports completion.
    - **Critic**: Spawn with artifact to review. Output is a PASS/REVISE/DROP verdict via SendMessage. On REVISE: `SendMessage` changes to the builder. On DROP: stop and ask the user.
    - **Designer**: Spawn with design question. Output is a design document or ADR. Proceed when document exists.
-   - **Specialist**: Spawn with skill name in the prompt (e.g., "Invoke Skill('security-review') then audit src/auth/"). If the plan specifies `Specialist Skills`, include them in the prompt. Output is a findings report.
+   - **Auditor**: Spawn with skill name in the prompt (e.g., "Invoke Skill('review-security') then audit src/auth/"). If the plan specifies review skills, include them in the prompt. Output is a findings report.
 
-   **5j. Gotcha relay**: After any teammate completes (builder, validator, critic, designer, specialist, researcher), scan their SendMessage output for a `## Gotchas Identified` section. If found, extract entries. Read `docs/logs/gotcha-log.md` and check for duplicates (same title or substantially same description). For each new gotcha, append to the top of the log (below header) using the agent entry format:
+   **5j. Gotcha relay**: After any teammate completes (builder, validator, critic, designer, auditor, researcher), scan their SendMessage output for a `## Gotchas Identified` section. If found, extract entries. Read `docs/logs/gotcha-log.md` and check for duplicates (same title or substantially same description). For each new gotcha, append to the top of the log (below header) using the agent entry format:
    ```
    ## [{tag}] {Title}
    **Date:** {YYYY-MM-DD} | **Last Seen:** {YYYY-MM-DD} | **Occurrences:** 1

@@ -122,7 +122,7 @@ Severity levels: HIGH, MEDIUM, LOW
 - Only flag performance issues you can demonstrate in the code -- no speculative optimization
 - Do not recommend premature optimization for code paths that are not hot
 - Distinguish between "slow" and "slow enough to matter" -- context determines severity
-- Flag items needing profiling data as "requires runtime measurement" (delegate to specialist)
+- Flag items needing profiling data as "requires runtime measurement" (delegate to validator)
 - Do not rewrite code -- identify the pattern and suggest the approach
 - Performance improvements that sacrifice readability need explicit justification
 

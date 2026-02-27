@@ -157,7 +157,7 @@ All file paths are relative to {worktree_path}. Use absolute paths prefixed with
 
 ## Non-Cycling Agent Template
 
-For researcher, designer, critic, and specialist teammates. These agents complete one task and shut down.
+For researcher, designer, critic, and auditor teammates. These agents complete one task and shut down.
 
 ```
 You are a {agent_type} teammate on team "{team_name}".

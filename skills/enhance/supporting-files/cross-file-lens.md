@@ -40,7 +40,7 @@ Build an inventory of all discovered files before running checks.
 **Skill-to-Agent Mapping**
 If a dispatch table exists (e.g., `subagent-skill-dispatch.md`):
 - Every skill listed in the dispatch table should exist on disk
-- Every agent type listed should be a valid subagent type (`builder`, `researcher`, `critic`, `validator`, `specialist`, `designer`)
+- Every agent type listed should be a valid subagent type (`builder`, `researcher`, `critic`, `validator`, `auditor`, `designer`)
 - Flag: Dispatch table references non-existent skill or invalid agent type
 
 **Skill-Awareness Coverage**
@@ -110,7 +110,7 @@ For agent definitions with `tools:` or `allowed-tools:` frontmatter:
 
 **Agent Name vs Filename**
 - Agent definition filename should match the agent's role
-- Flag: File named `specialist.md` but content describes a builder role
+- Flag: File named `auditor.md` but content describes a builder role
 
 **Cross-Reference Name Alignment**
 - When one file references another by name, the name should match exactly
