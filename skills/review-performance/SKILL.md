@@ -1,7 +1,7 @@
 ---
 name: review-performance
+version: 1.0.0
 description: "Performance review lens for code. Proactively use when reviewing for N+1 queries, async blocking, hot path inefficiencies, memory leaks, or unnecessary allocations."
-version: 0.1.0
 ---
 
 # Performance Review
@@ -131,6 +131,3 @@ Severity levels: HIGH, MEDIUM, LOW
 - `review-code-quality` -- General quality (this skill focuses on performance dimension only)
 - `review-architecture` -- Structural patterns that cause systemic performance issues
 
-## Completion Token
-
-When this skill completes successfully, output: `[SKILL_COMPLETE:review-performance]`

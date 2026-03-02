@@ -1,8 +1,8 @@
 ---
 name: create-subagent
+version: 1.0.0
 description: Create custom Claude Code sub-agents with full ecosystem setup. Proactively use when creating, designing, or configuring a new subagent, agent definition, or .claude/agents/ file.
 user-invocable: false
-version: 0.1.0
 ---
 
 # Creating a Sub-agent
@@ -177,5 +177,3 @@ The token must match the token in the skill file. This verifies the skill was ac
 
 **Documentation**: https://code.claude.com/docs/en/sub-agents
 
-## Completion Token
-When this skill completes successfully, output: `[SKILL_COMPLETE:create-subagent]`

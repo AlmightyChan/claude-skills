@@ -1,5 +1,6 @@
 ---
 name: refine
+version: 1.0.0
 description: "Use when you have a pitch file that needs formal requirements, specification, or technical documentation"
 argument-hint: <path-to-pitch-file>
 hooks:
@@ -20,7 +21,6 @@ hooks:
             || uv run $HOME/.claude/hooks/validators/validate_file_contains.py
             -d docs/findings -e .md --max-age 60
             --contains "## 1." 2>/dev/null'
-version: 0.1.0
 ---
 
 # Refine
@@ -294,12 +294,6 @@ When this skill completes, produce a structured handoff for the next stage. This
 - **Constraints established:** Scope boundaries, non-functional requirements, MoSCoW priorities
 - **Open questions:** Unresolved items for the next stage
 - **Scope:** Modules, features, and boundaries defined in the document
-
-## Completion Token
-
-Output `[SKILL_COMPLETE:refine]` after the user responds to the routing question:
-- If user selects "/plan": emit the token, then output the invocation command.
-- If user selects "Done for now": emit the token after displaying the file path.
 
 ## Metadata
 

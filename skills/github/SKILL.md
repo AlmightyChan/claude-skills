@@ -1,5 +1,6 @@
 ---
 name: github
+version: 1.0.0
 description: "GitHub workflow operations. Use when creating PRs, reviewing pull requests, managing issues, working with worktrees, creating releases, setting up CI/GitHub Actions, or using gh CLI patterns."
 argument-hint: "[operation] [details]"
 model: sonnet
@@ -24,12 +25,14 @@ Read the request and load ONLY the supporting file needed — do not load all fi
 
 | If the request involves... | Load this file |
 |---|---|
+| Solo dev workflow: full feature/bug lifecycle, shipping flow | [solo-dev-workflow.md](solo-dev-workflow.md) |
 | Commits: stage, commit, push, tag, versioning | [commit-workflow.md](commit-workflow.md) |
 | Worktrees: create, list, cleanup, parallel work | [worktree-operations.md](worktree-operations.md) |
 | Pull requests: create, review, update, merge, checks | [pr-operations.md](pr-operations.md) |
 | Issues: view, triage, fix-issue flow, labels | [issue-operations.md](issue-operations.md) |
 | Releases, tags, post-merge cleanup, MCP repo tools | [repo-operations.md](repo-operations.md) |
 | GitHub Actions, CI/CD, claude-code-action | [ci-operations.md](ci-operations.md) |
+| Branch protection: enable, disable, break-glass, rollback | [branch-protection-setup.md](branch-protection-setup.md) |
 | gh CLI: JSON/JQ, gh api, batch ops, extensions | [gh-cli-reference.md](gh-cli-reference.md) |
 
 If the operation is ambiguous, ask the user to clarify. If the request spans multiple categories, load files sequentially as needed.
@@ -41,6 +44,8 @@ For PR description formatting, see [templates/pr-description.md](templates/pr-de
 **Tool preference:** Use MCP GitHub tools (`mcp__github__*`) over `gh` CLI when available. Fall back to `gh` CLI if MCP is unavailable. See `.claude/rules/mcp-preferences.md`.
 
 **Commit conventions:** Follow conventional commits format from project conventions: `type(scope): description`. Include `Co-Authored-By: Claude <noreply@anthropic.com>`.
+
+**Issue linking:** When a tracking issue exists, reference it in commits (`Refs #N` for intermediate, `Closes #N` for final) and in PR bodies (`Closes #<issue-number>`).
 
 **Branch naming:** `{type}/{short-description}` — e.g., `feat/add-dark-mode`, `fix/symlink-path`.
 

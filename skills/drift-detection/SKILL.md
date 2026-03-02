@@ -1,7 +1,7 @@
 ---
 name: drift-detection
+version: 1.0.0
 description: "Drift analysis between plans, docs, and code. Proactively use when checking plan-vs-reality alignment, stale issues, outdated documentation, or scope creep."
-version: 0.1.0
 ---
 
 # Drift Detection
@@ -136,6 +136,3 @@ Output must be **brutally specific**. Every finding must be actionable.
 - `review-architecture` -- Architecture drift as a subset of structural analysis
 - `verification-before-completion` -- Verifying that claimed completions match reality
 
-## Completion Token
-
-When this skill completes successfully, output: `[SKILL_COMPLETE:drift-detection]`

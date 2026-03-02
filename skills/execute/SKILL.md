@@ -1,17 +1,9 @@
 ---
 name: execute
+version: 1.0.0
 description: "Use when you have an implementation plan ready for agent-driven execution"
 argument-hint: [path to plan document]
 model: opus
-hooks:
-  Stop:
-    - hooks:
-        - type: command
-          command: >-
-            uv run $HOME/.claude/hooks/validators/validate_file_contains.py
-            -d "$PWD" -e .md --prefix build-status --max-age 900
-            --contains '## '
-version: 0.1.0
 ---
 
 # Execute
@@ -186,12 +178,10 @@ PATH_TO_PLAN: $ARGUMENTS
 9. **Report and ship**: Present results with: tasks completed, files changed, verification results, document moves performed, worktree location.
    - Use AskUserQuestion to offer shipping options:
      1. "Create PR (Recommended)" — commit all changes on the feature branch, push to origin, create a PR targeting main, and clean up the worktree. This is the standard workflow for reviewed changes.
-     2. "Merge directly to main" — merge the feature branch to main locally, push, and clean up the worktree. For solo work or changes that don't need review.
-     3. "Keep branch" — leave the worktree and branch as-is for further work.
-     4. "Discard" — remove the worktree and delete the branch.
+     2. "Keep branch" — leave the worktree and branch as-is for further work.
+     3. "Discard" — remove the worktree and delete the branch.
    - **Executing the selected option**: Invoke `Skill('github')` to handle whichever option the user selects. The GitHub skill has the commit conventions, PR templates, worktree cleanup procedures, and MCP tool preferences needed to execute cleanly. Pass it the operation context: branch name, files changed summary, and the user's choice.
    - For "Create PR": the GitHub skill handles commit → push → PR creation (with proper description from the stage handoff) → worktree cleanup.
-   - For "Merge directly to main": follow the merge-back procedure in `.claude/rules/worktree-conventions.md` — merge, post-merge verification, worktree cleanup.
    - For "Discard": `git worktree remove` + `git branch -d` per worktree conventions.
 
 ## Agent Compatibility Notes
@@ -224,6 +214,3 @@ When this skill completes, produce a structured handoff for the next stage. This
 - `plan` — Upstream: produces the implementation plan this skill executes
 - `github` — Downstream: handles PR creation, branch push, worktree cleanup after execution completes
 
-## Completion Token
-
-When this skill completes successfully, output: `[SKILL_COMPLETE:execute]`

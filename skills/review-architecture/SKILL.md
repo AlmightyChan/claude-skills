@@ -1,7 +1,7 @@
 ---
 name: review-architecture
+version: 1.0.0
 description: "Architecture review lens for codebases with 50+ source files. Proactively use when reviewing module boundaries, dependency direction, cross-layer coupling, or pattern consistency."
-version: 0.1.0
 ---
 
 # Architecture Review
@@ -128,6 +128,3 @@ Severity levels: HIGH, MEDIUM, LOW
 - `review-performance` -- Performance patterns that may have architectural roots
 - `drift-detection` -- Detecting when architecture has drifted from documented design
 
-## Completion Token
-
-When this skill completes successfully, output: `[SKILL_COMPLETE:review-architecture]`

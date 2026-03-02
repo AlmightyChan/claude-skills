@@ -1,7 +1,7 @@
 ---
 name: learn-topic
+version: 1.0.0
 description: "Progressive deep-research methodology. Proactively use when researching unfamiliar technology, evaluating libraries, or building domain expertise from scratch."
-version: 0.1.0
 ---
 
 # Learn Topic
@@ -136,6 +136,3 @@ Research consumes significant context. Manage token budget:
 - `drift-detection` -- Uses research findings to detect drift
 - `sync-docs` -- Ensures documentation stays current with research findings
 
-## Completion Token
-
-When this skill completes successfully, output: `[SKILL_COMPLETE:learn-topic]`

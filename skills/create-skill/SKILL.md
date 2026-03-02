@@ -1,5 +1,6 @@
 ---
 name: create-skill
+version: 1.0.0
 description: Create Claude Code skills with proper structure and invocation control. Proactively use when creating, designing, or configuring a new skill, SKILL.md file, or slash command.
 user-invocable: false
 hooks:
@@ -7,7 +8,6 @@ hooks:
     - hooks:
         - type: command
           command: "bash -c ' recent=$(find ~/.claude/skills -name \"SKILL.md\" -mmin -60 2>/dev/null | head -1); if [ -z \"$recent\" ]; then echo \"{\\\"decision\\\":\\\"block\\\",\\\"reason\\\":\\\"No SKILL.md found modified in last 60 minutes. Use Write to create the skill file.\\\"}\" >&2; exit 2; fi; if ! grep -q \"^name:\" \"$recent\" 2>/dev/null; then echo \"{\\\"decision\\\":\\\"block\\\",\\\"reason\\\":\\\"SKILL.md at $recent missing name: field in frontmatter.\\\"}\" >&2; exit 2; fi; if ! grep -q \"^description:\" \"$recent\" 2>/dev/null; then echo \"{\\\"decision\\\":\\\"block\\\",\\\"reason\\\":\\\"SKILL.md at $recent missing description: field in frontmatter.\\\"}\" >&2; exit 2; fi'"
-version: 0.1.0
 ---
 
 # Creating a Skill
@@ -289,5 +289,3 @@ When explaining code, include:
 - `supporting-files/persuasion-principles.md` — Writing persuasive skill instructions
 - `supporting-files/testing-non-discipline-skills.md` — Testing workflow and meta skills
 
-## Completion Token
-When this skill completes successfully, output: `[SKILL_COMPLETE:create-skill]`

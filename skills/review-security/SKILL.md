@@ -1,7 +1,7 @@
 ---
 name: review-security
+version: 1.0.0
 description: "Security review lens for code. Proactively use when auditing auth, authz, injection risks, secrets exposure, input validation, or insecure defaults."
-version: 0.1.0
 ---
 
 # Security Review
@@ -144,6 +144,3 @@ Severity levels: CRITICAL, HIGH, MEDIUM, LOW
 - `deslop` -- Catches hardcoded secrets as a slop pattern
 - `test-coverage-review` -- Validates security-relevant test coverage
 
-## Completion Token
-
-When this skill completes successfully, output: `[SKILL_COMPLETE:review-security]`
