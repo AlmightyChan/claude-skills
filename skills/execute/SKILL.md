@@ -1,6 +1,6 @@
 ---
 name: execute
-version: 1.1.0
+version: 1.2.0
 description: "Use when you have an implementation plan ready for agent-driven execution"
 argument-hint: [path to plan document]
 model: opus
@@ -151,6 +151,13 @@ PATH_TO_PLAN: $ARGUMENTS
      - **Critic**: Dispatch with artifact to review. Output is a PASS/REVISE/DROP verdict. On REVISE: feed changes back to the builder. On DROP: stop and ask the user.
      - **Designer**: Dispatch with design question. Output is a design document or ADR. Proceed when document exists.
      - **Auditor**: Dispatch with skill name in the prompt (e.g., "Invoke Skill('review-security') then audit src/auth/"). If the plan specifies review skills, include them in the prompt. Output is a findings report.
+   - **Project status update**: After each builder/validator pair passes (or after a non-cycling agent completes), update the project's status file. Locate the file: check for `STATUS.md` or `status.md` in `{project-dir}` (case-insensitive search; prefer the one that exists). If found:
+     1. Identify which milestone unit(s) the completed task corresponds to (from the plan's `## Units` or task metadata).
+     2. Mark those units as `Complete` in the status file's unit tables.
+     3. If all units in a milestone are now complete, update the milestone status to `Complete` in the phase overview table.
+     4. Update the `Last updated` date.
+     5. Add an activity log entry if the status file has a `## Recent Activity` section.
+     If no status file exists, skip silently — the project may not use forge conventions. The build-status file still tracks per-task execution detail for resume capability.
    - **Gotcha relay**: After any agent completes (builder, validator, critic, designer, auditor, researcher), scan output for a `## Gotchas Identified` section. If found, extract entries. Read `docs/logs/gotcha-log.md` and check for duplicates (same title or substantially same description). For each new gotcha, append to the top of the log (below header) using the agent entry format:
      ```
      ## [{tag}] {Title}
@@ -173,16 +180,16 @@ PATH_TO_PLAN: $ARGUMENTS
 8. **Document lifecycle**:
    - **Teammate mode**: If TEAMMATE_MODE: skip this step entirely. The lead handles document lifecycle.
    After the acceptance gate passes (or the user acknowledges unmet criteria and chooses to proceed), manage the pipeline documents:
+   - **Final status file update**: Read the project's status file (`STATUS.md` or `status.md` in `{project-dir}`). Update the current phase/milestone header to reflect what was just completed. Mark any remaining incomplete units from this plan as complete. Update `Last updated` date. Add a summary activity log entry (e.g., "M5 completed — session deck (PR #12)"). This is the permanent record of execution — it replaces the build-status file as the committed artifact.
+   - **Build-status cleanup**: The `build-status--{plan-slug}.md` is a **transient working document** used only during execution for resume capability and dispatch rules persistence. Do NOT commit it. Either delete it (`rm build-status--{plan-slug}.md`) or leave it untracked. If executing in a worktree, ensure it is in `.gitignore` or deleted before commit.
    - Read `## Project Directory` from the plan. If the value is a project path (e.g., `projects/cadence`):
      1. Create `{project-dir}/docs/` if it doesn't exist.
      2. Identify all technical documents referenced in the plan's `## Relevant Files` section (PRDs, Brand OS, feature specs — files matching `prd-*.md`, `brand-os-*.md`, `feature-*.md`, `srd-*.md`, `architecture-*.md`, `service-*.md`).
      3. For each document currently in a staging directory (`docs/prd/`, `docs/specs/`): move it to `{project-dir}/docs/` using `mv`. Skip documents that are already in the project directory.
      4. Archive the plan: `mv {plan-path} docs/archive/plan/`.
-     5. Move the `build-status--{plan-slug}.md` to `{project-dir}/docs/` as an execution record.
    - If the project directory is `basecamp`:
      1. Archive the plan: `mv {plan-path} docs/archive/plan/`.
      2. Leave technical documents in their staging directories (BASECAMP is both the project and the docs root).
-     3. Move the `build-status--{plan-slug}.md` to `docs/builds/`.
    - Report all file moves to the user in the report step.
    - **Worktree consideration**: If executing in a worktree, perform document moves in the worktree. They will be included in the merge.
 
@@ -213,7 +220,7 @@ The upgraded agent definitions (v2.0) operate within the existing build dispatch
 When this skill completes, produce a structured handoff for the next stage. This handoff is part of the Report output — include it in the chat summary.
 
 **Schema:**
-- **Output file:** `build-status--{plan-slug}.md` (final location per document lifecycle step)
+- **Output file:** `{project-dir}/STATUS.md` or `{project-dir}/status.md` (the project's canonical status file, updated during document lifecycle)
 - **Tasks completed:** {N}/{total} (list task IDs)
 - **Tasks failed:** {N} (list task IDs with failure reasons)
 - **Files changed:** List of all files created or modified during execution
