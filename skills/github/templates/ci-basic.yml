@@ -1,0 +1,108 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    name: Build & Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # ── Stack detection ──────────────────────────────────────────────────
+
+      - name: Detect stack
+        id: stack
+        run: |
+          if [ -f "package.json" ]; then
+            echo "stack=node" >> "$GITHUB_OUTPUT"
+          elif [ -f "Cargo.toml" ]; then
+            echo "stack=rust" >> "$GITHUB_OUTPUT"
+          elif [ -f "Package.swift" ]; then
+            echo "stack=swift" >> "$GITHUB_OUTPUT"
+          else
+            echo "stack=unknown" >> "$GITHUB_OUTPUT"
+          fi
+
+      # ── Node ─────────────────────────────────────────────────────────────
+
+      - name: Set up Node
+        if: steps.stack.outputs.stack == 'node'
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+
+      - name: Install dependencies (Node)
+        if: steps.stack.outputs.stack == 'node'
+        run: npm ci
+
+      - name: Lint (Node)
+        if: steps.stack.outputs.stack == 'node'
+        run: |
+          if npm run --silent 2>/dev/null | grep -q "^  lint$"; then
+            npm run lint
+          else
+            echo "No lint script found, skipping."
+          fi
+
+      - name: Build (Node)
+        if: steps.stack.outputs.stack == 'node'
+        run: npm run build
+
+      - name: Test (Node)
+        if: steps.stack.outputs.stack == 'node'
+        run: |
+          if npm run --silent 2>/dev/null | grep -q "^  test$"; then
+            npm test
+          else
+            echo "No test script found, skipping."
+          fi
+
+      # ── Rust ─────────────────────────────────────────────────────────────
+
+      - name: Set up Rust toolchain
+        if: steps.stack.outputs.stack == 'rust'
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache Rust build artifacts
+        if: steps.stack.outputs.stack == 'rust'
+        uses: Swatinem/rust-cache@v2
+
+      - name: Check (Rust)
+        if: steps.stack.outputs.stack == 'rust'
+        run: cargo check --all-features
+
+      - name: Test (Rust)
+        if: steps.stack.outputs.stack == 'rust'
+        run: cargo test --all-features
+
+      # ── Swift ────────────────────────────────────────────────────────────
+
+      - name: Build (Swift)
+        if: steps.stack.outputs.stack == 'swift'
+        runs-on: macos-latest
+        run: swift build
+
+      - name: Test (Swift)
+        if: steps.stack.outputs.stack == 'swift'
+        run: swift test
+
+      # ── Unknown stack ────────────────────────────────────────────────────
+
+      - name: No recognized stack
+        if: steps.stack.outputs.stack == 'unknown'
+        run: |
+          echo "No recognized stack detected (no package.json, Cargo.toml, or Package.swift)."
+          echo "Add a stack-specific build/test step for this project."
+          exit 1
