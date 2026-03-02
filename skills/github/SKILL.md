@@ -3,7 +3,6 @@ name: github
 description: "GitHub workflow operations. Use when creating PRs, reviewing pull requests, managing issues, working with worktrees, creating releases, setting up CI/GitHub Actions, or using gh CLI patterns."
 argument-hint: "[operation] [details]"
 model: sonnet
-version: 0.1.0
 ---
 
 # GitHub
@@ -25,6 +24,7 @@ Read the request and load ONLY the supporting file needed — do not load all fi
 
 | If the request involves... | Load this file |
 |---|---|
+| Commits: stage, commit, push, tag, versioning | [commit-workflow.md](commit-workflow.md) |
 | Worktrees: create, list, cleanup, parallel work | [worktree-operations.md](worktree-operations.md) |
 | Pull requests: create, review, update, merge, checks | [pr-operations.md](pr-operations.md) |
 | Issues: view, triage, fix-issue flow, labels | [issue-operations.md](issue-operations.md) |
@@ -53,6 +53,3 @@ For PR description formatting, see [templates/pr-description.md](templates/pr-de
 
 **Worktree conventions:** Follow `.claude/rules/worktree-conventions.md` for all worktree operations.
 
-## Completion Token
-
-When this skill completes successfully, output: `[SKILL_COMPLETE:github]`
