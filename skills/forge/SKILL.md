@@ -383,7 +383,7 @@ Dispatch writer with:
 - roadmap.md content (version breakdown)
 - spec-manifest.md content (full doc list with dependencies)
 - All spec file paths with line counts
-- Instruction: "Generate an ordered task list grouped by version, ordered by dependency within each version. Use the status format below."
+- Instruction: "Generate an ordered task list grouped by version, ordered by dependency within each version. Use the status format below. Include a Prerequisites section for non-code blockers (legal, regulatory, business, design decisions) sourced from decisions.md (MODERATE/LOW unresolved), issues.md, and review-findings.md. Omit the section if none exist."
 
 **Status format:**
 
@@ -391,6 +391,11 @@ Dispatch writer with:
 # Status
 
 ## Current Phase: [phase name]
+
+### Prerequisites
+Non-code items that must be resolved before implementation begins. Sourced from unresolved MODERATE/LOW decisions in decisions.md, open issues in issues.md, and operational concerns in review-findings.md. Group by category (e.g., Legal, Market Research, Design, Domain Decisions). Omit this section if no prerequisites exist.
+
+- [ ] Description — source reference (blocked-phase: [phase name or "all"])
 
 ### In Progress
 - [ ] `path/to/file` — Description

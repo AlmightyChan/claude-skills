@@ -120,6 +120,13 @@ IMPORTANT: **PLANNING ONLY** — Do not execute, build, or deploy. Output is pla
 - Validate `projects/$ARGUMENTS/` exists.
 - Check forge completion: `status.md` must exist. If not: "Forge project incomplete. Run `/forge {name}` to finish."
 - Check for unresolved CRITICAL decisions in `decisions.md`. Present to user if any exist.
+- **Prerequisite gate:** Read the `### Prerequisites` section of `status.md`. If the section exists and contains unchecked items (`- [ ]`):
+  1. Present all unchecked prerequisites to the user, grouped by category.
+  2. Ask via AskUserQuestion:
+     - "Resolve prerequisites" — Pause planning. The user addresses these items first, then re-invokes `/forge-plan`.
+     - "Acknowledge and continue (Recommended)" — User confirms awareness. Log acknowledged prerequisites in each generated plan's Notes section so executing agents know about unresolved upstream items.
+     - "Mark resolved" — User asserts all prerequisites are handled. Proceed without logging.
+  3. If "Resolve prerequisites" is selected, stop skill execution.
 
 ### 2. Ingest Forge Artifacts
 - Read: `discovery-notes.md`, `product-brief.md`, `components.md`, `spec-manifest.md`, `decisions.md`, `issues.md`, `review-findings.md`, `roadmap.md`, `status.md`, `CLAUDE.md`
