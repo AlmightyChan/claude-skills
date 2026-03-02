@@ -1,12 +1,12 @@
 ---
 name: sync-docs
+version: 1.0.0
 description: "Documentation-code sync check. Proactively use when verifying doc accuracy after code changes, checking for stale references, outdated examples, or missing CHANGELOG entries."
-version: 0.1.0
 ---
 
 # Sync Docs
 
-- **Agents:** builder
+- **Agents:** writer
 
 ## Overview
 
@@ -121,6 +121,3 @@ Structure results by severity:
 - `review-code-quality` -- Code quality (sync-docs focuses on doc quality)
 - `deslop` -- Catches stale comments and doc references as slop patterns
 
-## Completion Token
-
-When this skill completes successfully, output: `[SKILL_COMPLETE:sync-docs]`

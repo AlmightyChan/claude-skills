@@ -1,8 +1,8 @@
 ---
 name: create-hook
+version: 1.0.0
 description: Create Claude Code hooks for workflow automation. Proactively use when creating, designing, or configuring hooks, automation, or lifecycle events.
 user-invocable: false
-version: 0.1.0
 ---
 
 # Creating a Hook
@@ -159,5 +159,3 @@ echo '{"tool_name":"Bash","tool_input":{"command":"npm test"}}' | ./hook.sh
 
 **Documentation**: https://code.claude.com/docs/en/hooks
 
-## Completion Token
-When this skill completes successfully, output: `[SKILL_COMPLETE:create-hook]`

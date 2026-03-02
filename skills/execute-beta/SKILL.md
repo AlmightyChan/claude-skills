@@ -1,5 +1,6 @@
 ---
 name: execute-beta
+version: 0.1.0
 description: "Use when you have an implementation plan ready for agent-teams-driven execution"
 argument-hint: [path to plan document]
 model: opus
@@ -236,7 +237,7 @@ PATH_TO_PLAN: $ARGUMENTS
      TeamDelete({ team_name: "exec-{plan-slug}" })
      ```
 
-8. **Report**: Present results with: tasks completed, files changed, verification results, document moves performed, worktree location, team metadata (name, waves executed, total teammates spawned). Offer options: merge to main, push and create PR, keep branch, or discard.
+8. **Report**: Present results with: tasks completed, files changed, verification results, document moves performed, worktree location, team metadata (name, waves executed, total teammates spawned). Offer options: push and create PR, keep branch, or discard.
 
 ## Agent Compatibility Notes
 

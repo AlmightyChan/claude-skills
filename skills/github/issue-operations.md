@@ -1,5 +1,33 @@
 # Issue Operations
 
+## Getting Started
+
+First-time setup for issue tracking. Run once per GitHub account.
+
+### Label Setup
+
+Create a standard label set across all repos. Run once:
+
+```bash
+# Standard labels
+LABELS='bug,feature,chore,docs,priority:critical,priority:high,priority:medium,priority:low'
+
+gh repo list AlmightyChan --json name,owner --jq '.[].name' | while read repo; do
+  IFS=',' read -ra LABEL_ARR <<< "$LABELS"
+  for label in "${LABEL_ARR[@]}"; do
+    gh label create "$label" --repo "AlmightyChan/$repo" --force 2>/dev/null
+  done
+done
+```
+
+### First Issue
+
+```bash
+gh issue create --title "feat: set up project infrastructure" \
+  --body "Initial project setup and configuration." \
+  --label "feature"
+```
+
 ---
 
 ## View Issues

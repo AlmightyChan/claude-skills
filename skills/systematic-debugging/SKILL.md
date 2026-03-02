@@ -1,7 +1,7 @@
 ---
 name: systematic-debugging
+version: 1.0.0
 description: "Use when encountering any bug, test failure, or unexpected behavior — before proposing fixes"
-version: 0.1.0
 ---
 
 # Systematic Debugging
@@ -13,8 +13,6 @@ version: 0.1.0
 Random fixes waste time and create new bugs. Quick patches mask underlying issues.
 
 **Core principle:** ALWAYS find root cause before attempting fixes. Symptom fixes are failure.
-
-**Violating the letter of this process is violating the spirit of debugging.**
 
 ## The Iron Law
 
@@ -245,19 +243,6 @@ If you catch yourself thinking:
 
 **When you see these:** STOP. Return to Phase 1.
 
-## Common Rationalizations
-
-| Excuse | Reality |
-|--------|---------|
-| "Issue is simple, don't need process" | Simple issues have root causes too. Process is fast for simple bugs. |
-| "Emergency, no time for process" | Systematic debugging is FASTER than guess-and-check thrashing. |
-| "Just try this first, then investigate" | First fix sets the pattern. Do it right from the start. |
-| "I'll write test after confirming fix works" | Untested fixes don't stick. Test first proves it. |
-| "Multiple fixes at once saves time" | Can't isolate what worked. Causes new bugs. |
-| "Reference too long, I'll adapt the pattern" | Partial understanding guarantees bugs. Read it completely. |
-| "I see the problem, let me fix it" | Seeing symptoms ≠ understanding root cause. |
-| "One more fix attempt" (after 2+ failures) | 3+ failures = architectural problem. Question pattern, don't fix again. |
-
 ## Quick Reference
 
 | Phase | Key Activities | Success Criteria |
@@ -304,5 +289,3 @@ Estimated from observed debugging sessions:
 - `supporting-files/defense-in-depth.md` — Multi-layer validation after finding root cause
 - `supporting-files/condition-based-waiting.md` — Replace arbitrary timeouts with condition polling
 
-## Completion Token
-When this skill completes successfully, output: `[SKILL_COMPLETE:systematic-debugging]`

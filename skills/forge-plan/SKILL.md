@@ -1,5 +1,6 @@
 ---
 name: forge-plan
+version: 1.0.0
 description: "Transform a completed forge project into parallelizable implementation plans with worktree isolation"
 argument-hint: "[project-name]"
 model: opus

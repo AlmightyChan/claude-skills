@@ -1,7 +1,7 @@
 ---
 name: test-coverage-review
+version: 1.0.0
 description: "Test quality and coverage review. Proactively use when validating test adequacy, checking for meaningful assertions, verifying edge case coverage, or assessing async error testing."
-version: 0.1.0
 ---
 
 # Test Coverage Review
@@ -156,6 +156,3 @@ Severity levels: BLOCKING, IMPORTANT, MINOR
 - `review-code-quality` -- General code quality (this skill focuses on test quality dimension)
 - `verification-before-completion` -- Completion verification (this skill provides the test quality input)
 
-## Completion Token
-
-When this skill completes successfully, output: `[SKILL_COMPLETE:test-coverage-review]`

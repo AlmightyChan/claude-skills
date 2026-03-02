@@ -1,8 +1,8 @@
 ---
 name: enhance
+version: 1.0.0
 description: "Audit and enhance Claude Code configuration files. Proactively use when auditing, validating, or improving CLAUDE.md project memory files, SKILL.md skill definitions, or cross-file consistency across agents, skills, and rules."
 argument-hint: "[target: project-memory | skills | cross-file] [path]"
-version: 0.1.0
 ---
 
 # Enhance
@@ -131,6 +131,3 @@ Group findings by category (as defined in each lens), then by certainty within e
 - `supporting-files/skills-lens.md` — Detection patterns for SKILL.md skill definitions
 - `supporting-files/cross-file-lens.md` — Detection patterns for cross-file consistency
 
-## Completion Token
-
-When this skill completes successfully, output: `[SKILL_COMPLETE:enhance]`

@@ -1,8 +1,8 @@
 ---
 name: create-mcp
+version: 1.0.0
 description: Configure MCP servers to connect Claude Code to external tools. Proactively use when adding, configuring, or managing MCP servers, tools, or integrations.
 user-invocable: false
-version: 0.1.0
 ---
 
 # Configuring an MCP Server
@@ -112,5 +112,3 @@ Plugins can bundle MCP servers in `.mcp.json` or inline in `plugin.json`. These 
 
 **Documentation**: https://code.claude.com/docs/en/mcp
 
-## Completion Token
-When this skill completes successfully, output: `[SKILL_COMPLETE:create-mcp]`

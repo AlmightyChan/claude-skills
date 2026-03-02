@@ -1,5 +1,6 @@
 ---
 name: pitch
+version: 1.0.0
 description: "Use when shaping a new idea, assessing viability, or scoping an enhancement for an existing project"
 argument-hint: [idea description or ideas-log reference]
 hooks:
@@ -16,7 +17,6 @@ hooks:
             --contains '## Scope Assessment'
             --contains '## Viability Assessment'
             --contains '## Open Questions'
-version: 0.1.0
 ---
 
 # Pitch
@@ -375,10 +375,3 @@ When this skill completes, produce a structured handoff for the next stage. This
 
 - `refine` — Next stage: generates formal requirements from a pitch
 
-## Completion Token
-
-Output `[SKILL_COMPLETE:pitch]` after:
-- The user selects "Done for now" or "Review the pitch first" and the file path is displayed.
-- The user selects a /refine option — output the token BEFORE invoking the Skill tool for refine.
-
-The token confirms the pitch artifact was produced. It fires regardless of the routing choice.

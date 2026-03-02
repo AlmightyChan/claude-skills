@@ -1,7 +1,7 @@
 ---
 name: verification-before-completion
+version: 1.0.0
 description: "Use when about to claim work is complete, fixed, or passing — before committing, creating PRs, or reporting task status"
-version: 0.1.0
 ---
 
 # Verification Before Completion
@@ -13,8 +13,6 @@ version: 0.1.0
 Claiming work is complete without verification is dishonesty, not efficiency.
 
 **Core principle:** Evidence before claims, always.
-
-**Violating the letter of this rule is violating the spirit of this rule.**
 
 ## The Iron Law
 
@@ -62,19 +60,6 @@ Skip any step = lying, not verifying
 - Thinking "just this once"
 - Tired and wanting work over
 - **ANY wording implying success without having run verification**
-
-## Rationalization Prevention
-
-| Excuse | Reality |
-|--------|---------|
-| "Should work now" | RUN the verification |
-| "I'm confident" | Confidence ≠ evidence |
-| "Just this once" | No exceptions |
-| "Linter passed" | Linter ≠ compiler |
-| "Agent said success" | Verify independently |
-| "I'm tired" | Exhaustion ≠ excuse |
-| "Partial check is enough" | Partial proves nothing |
-| "Different words so rule doesn't apply" | Spirit over letter |
 
 ## Key Patterns
 
@@ -144,5 +129,3 @@ This is non-negotiable.
 
 For code-level test-first development, use the `tdd` skill. VBC is for verifying non-code claims: documentation accuracy, config correctness, completion status.
 
-## Completion Token
-When this skill completes successfully, output: `[SKILL_COMPLETE:verification-before-completion]`

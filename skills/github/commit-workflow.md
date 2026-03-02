@@ -64,6 +64,45 @@ EOF
 
 ---
 
+## Issue References
+
+Link commits to their tracking issue when one exists.
+
+| Context | Convention | Effect |
+|---------|-----------|--------|
+| Intermediate commit (work in progress) | `Refs #N` in commit body | Links to issue without closing it |
+| Final commit (work complete) | `Fixes #N` or `Closes #N` in commit body | Auto-closes the issue on merge to default branch |
+
+**Example — intermediate commit:**
+
+```bash
+git commit -m "$(cat <<'EOF'
+feat(auth): add login form validation
+
+Refs #12
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+EOF
+)"
+```
+
+**Example — final commit:**
+
+```bash
+git commit -m "$(cat <<'EOF'
+feat(auth): complete login flow with error handling
+
+Closes #12
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+EOF
+)"
+```
+
+**Scope:** This applies to shipping commits, not per-cycle TDD commits (which are rapid-fire and don't need issue references).
+
+---
+
 ## Push to Remote
 
 Push immediately after committing. Do not wait for the user to ask.

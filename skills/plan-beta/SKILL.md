@@ -1,5 +1,6 @@
 ---
 name: plan-beta
+version: 0.1.0
 description: "Use when you have a technical document that needs implementation task decomposition with agent teams execution model"
 argument-hint: [user prompt or path to PRD/pitch]
 model: opus

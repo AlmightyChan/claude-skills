@@ -1,7 +1,7 @@
 ---
 name: review-code-quality
+version: 1.0.0
 description: "Code quality review lens. Proactively use when reviewing code for style issues, error handling gaps, potential bugs, maintainability problems, or duplication."
-version: 0.1.0
 ---
 
 # Code Quality Review
@@ -123,6 +123,3 @@ Severity levels: HIGH, MEDIUM, LOW
 - `review-performance` -- Performance-specific patterns
 - `deslop` -- AI-specific code quality patterns
 
-## Completion Token
-
-When this skill completes successfully, output: `[SKILL_COMPLETE:review-code-quality]`

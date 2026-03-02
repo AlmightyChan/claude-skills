@@ -1,7 +1,7 @@
 ---
 name: ci-fix
+version: 1.0.0
 description: "CI failure diagnosis and fix. Proactively use when a CI pipeline fails, build logs show errors, or PR checks report lint, type, test, or build failures."
-version: 0.1.0
 ---
 
 # CI Fix
@@ -120,6 +120,3 @@ After applying the fix, run the same CI command locally to verify:
 - `tdd` -- Test-driven approach prevents test failures
 - `systematic-debugging` -- For complex test failures requiring investigation
 
-## Completion Token
-
-When this skill completes successfully, output: `[SKILL_COMPLETE:ci-fix]`

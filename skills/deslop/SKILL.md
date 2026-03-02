@@ -1,7 +1,7 @@
 ---
 name: deslop
+version: 1.0.0
 description: "AI slop detection and cleanup. Proactively use when cleaning AI-generated code, detecting debug remnants, placeholder functions, hardcoded secrets, or AI verbosity patterns."
-version: 0.1.0
 ---
 
 # Deslop
@@ -128,6 +128,3 @@ When applying fixes, follow this priority order:
 
 - `supporting-files/slop-categories.md` -- Complete pattern taxonomy with severity levels, exclusions, and auto-fix strategies
 
-## Completion Token
-
-When this skill completes successfully, output: `[SKILL_COMPLETE:deslop]`

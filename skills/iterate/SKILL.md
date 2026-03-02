@@ -1,5 +1,6 @@
 ---
 name: iterate
+version: 1.0.0
 description: >-
   Post-build project refinement and iteration. Proactively use when iterating on
   a completed project, fixing bugs after initial build, polishing features,
@@ -13,7 +14,6 @@ hooks:
           command: >-
             bash -c 'cd "$PWD" && git diff --name-only | grep -q ISSUES.md ||
             (echo "ISSUES.md was not updated during this session" >&2; exit 2)'
-version: 0.1.0
 ---
 
 # Iterate
@@ -94,7 +94,7 @@ This rule has no exceptions. Even single-line fixes get an entry — the cost of
 
 Then determine the approach:
 
-**(a) Inline fix** (FR-021): For trivial single-file changes under ~20 lines -- fix directly in the main conversation. No worktree dispatch. Examples: typo fix, single constant change, one-line logic correction. After fixing, the Verification Gate still applies before updating ISSUES.md status.
+**(a) Inline fix** (FR-021): For trivial single-file changes under ~20 lines -- fix directly in the main conversation. No worktree dispatch. If the current branch is `main`, create a feature branch first (e.g., `iterate/fix-{issue-id}`) and switch to it before making changes. Examples: typo fix, single constant change, one-line logic correction. After fixing, the Verification Gate still applies before updating ISSUES.md status.
 
 **(b) Background dispatch** (FR-006): For multi-file or complex changes -- dispatch a builder in a background worktree. This frees the conversation for the next issue while the builder works.
 
@@ -108,7 +108,7 @@ Before dispatching, re-read `iterate-status.md` from disk.
 
 **File overlap check (FR-007):** Extract the target file set from the ISSUES.md entry's `Files` field. If the `Files` field is absent or vague, ask: "Which files will this change touch?" Check the target files against all active agents' file sets in `iterate-status.md`. If overlap exists: queue the task and inform the user ("BUG-003 touches the same files as the in-progress BUG-001 fix -- I'll start it once BUG-001 completes"). If no overlap: proceed with dispatch.
 
-**Concurrent agent cap:** Do not dispatch more than 5 concurrent background agents (balances parallelism against context budget and worktree overhead). If 5 agents are active (status `in-progress` in iterate-status.md), queue additional tasks until an active agent completes.
+**Concurrent agent cap:** Do not dispatch more than 4 concurrent background agents. This aligns with the worktree cap (4 active worktrees, per `.claude/rules/worktree-conventions.md`) which is the binding constraint when using worktree isolation. If 4 agents are active (status `in-progress` in iterate-status.md), queue additional tasks until an active agent completes.
 
 **Dispatch (FR-006):** Use the Task tool with:
 - `run_in_background: true`
@@ -132,7 +132,7 @@ Before dispatching, re-read `iterate-status.md` from disk.
    2. "Reject — move on" — skip this fix, update iterate-status.md, move on
    3. "Revise — redispatch with feedback" — ask for feedback, then redispatch builder
 
-5. **On approval (Merge selected):** Merge the worktree branch (`git merge <branch>`). If conflicts exist, present the diff for manual resolution. Update iterate-status.md.
+5. **On approval (Merge selected):** Check the current branch. If on `main`, create a feature branch first (e.g., `iterate/session-{timestamp}`) and switch to it. Then merge the worktree branch (`git merge <branch>`). If conflicts exist, present the diff for manual resolution. Update iterate-status.md.
 
 6. **Post-merge integration check:** After merging, run a full-project build against the merged result (not the worktree branch). Non-overlapping file sets can still cause integration failures when combined. If the build fails, investigate — the issue may be the merge, not the builder's work.
 
@@ -305,12 +305,11 @@ If the session produced code changes:
    - Use AskUserQuestion with shipping options appropriate to the branch:
      - If on a feature branch:
        1. "Create PR (Recommended)" — commit, push feature branch, create PR targeting main
-       2. "Merge to main" — commit, merge to main, push, clean up feature branch
-       3. "Commit only" — commit on the current branch, no push
-       4. "Leave uncommitted" — skip
+       2. "Commit only (local, no push)" — commit on the current branch, no push
+       3. "Leave uncommitted" — skip
      - If on main:
-       1. "Commit and push (Recommended)" — commit with session summary, push to origin
-       2. "Commit only" — commit without pushing
+       1. "Create branch and PR (Recommended)" — create a feature branch, commit, push, create PR targeting main
+       2. "Commit only (local, no push)" — commit without pushing
        3. "Leave uncommitted" — skip
    - Invoke `Skill('github')` to handle the selected option. The GitHub skill handles commit conventions, PR templates, worktree cleanup, and push operations.
 
@@ -390,6 +389,3 @@ When this skill completes (session exit), produce a structured handoff as part o
 - `supporting-files/routing-triggers.md` -- Discipline skill routing trigger definitions and thresholds
 - `supporting-files/observation-categories.md` -- Proactive observation categories, scan heuristics, and default severities
 
-## Completion Token
-
-When this skill completes successfully, output: `[SKILL_COMPLETE:iterate]`

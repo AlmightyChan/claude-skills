@@ -40,6 +40,7 @@ EOF
 - Summary: 1-3 bullet points of what changed and why
 - Test plan: how to verify the changes work
 - Footer: `Generated with [Claude Code](https://claude.com/claude-code)`
+- Issue link: `Closes #<issue-number>` when an issue exists (auto-closes the issue on merge)
 
 ---
 
