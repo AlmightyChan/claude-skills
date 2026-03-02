@@ -1,6 +1,6 @@
 ---
 name: forge
-version: 1.0.0
+version: 1.1.0
 description: "Spec-driven project scaffolding. Takes an idea from discovery through spec generation, review, version planning, and task tracking."
 disable-model-invocation: true
 argument-hint: "[project-name]"
@@ -223,6 +223,7 @@ Dispatch writer with:
 - All decisions accumulated so far
 - Any open questions or concerns
 - The CLAUDE.md template below
+- Codex project doc templates at `~/BASECAMP/codex/project-docs/` — writer reads the relevant templates for product-brief.md, decisions.md, issues.md, CLAUDE.md, and spec-manifest.md
 - Instruction: "Create the project scaffolding files. Use the CLAUDE.md template. Group the index by domain."
 
 **CLAUDE.md template:**
@@ -285,6 +286,7 @@ For each spec in spec-manifest.md, dispatch writer with:
 - File paths of 1-2 related completed specs (paths only — writer reads them via Read tool)
 - Decisions from decisions.md tagged to the same component as this spec, plus all cross-cutting decisions
 - Confidence Gates protocol (defined above)
+- Codex spec template — writer reads `~/BASECAMP/codex/INDEX.md` Template Catalog to select the matching spec type (feature, system, design, API, or cross-cutting), then reads the template from `~/BASECAMP/codex/specs/`
 
 **Parallelization:** Read the dependency field in spec-manifest.md. Dispatch specs with no unmet dependencies simultaneously. After each parallel batch completes, determine which specs are now unblocked and dispatch the next batch.
 
@@ -383,6 +385,7 @@ Dispatch writer with:
 - roadmap.md content (version breakdown)
 - spec-manifest.md content (full doc list with dependencies)
 - All spec file paths with line counts
+- Status template from `~/BASECAMP/codex/project-docs/status.md`
 - Instruction: "Generate an ordered task list grouped by version, ordered by dependency within each version. Use the status format below. Include a Prerequisites section for non-code blockers (legal, regulatory, business, design decisions) sourced from decisions.md (MODERATE/LOW unresolved), issues.md, and review-findings.md. Omit the section if none exist."
 
 **Status format:**

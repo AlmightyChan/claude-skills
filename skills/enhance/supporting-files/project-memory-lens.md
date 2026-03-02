@@ -34,12 +34,6 @@ Also load `README.md` if it exists (used for duplication comparison in Efficienc
 
 Based on prompt engineering research — Claude follows instructions better with specific patterns:
 
-**Positive Over Negative**
-- Bad: "Don't use console.log"
-- Good: "Use the logger utility for all output"
-- Check for "don't", "never", "avoid" without a positive alternative in the same rule
-- Flag: Negative-only rules (>3 consecutive prohibitions without positive guidance)
-
 **Strong Constraint Language**
 - Critical rules should use "must", "always", "required"
 - Weak language ("should", "try to", "consider") reduces compliance for important rules
@@ -138,10 +132,10 @@ Claude Code supports scoped CLAUDE.md files:
 | Category | Patterns | Certainty |
 |----------|----------|-----------|
 | Structure | 3 | HIGH |
-| Instruction Effectiveness | 3 | HIGH |
+| Instruction Effectiveness | 2 | HIGH |
 | Content Positioning | 2 | HIGH |
 | Reference Validation | 3 | HIGH |
 | Efficiency | 3 | MEDIUM |
 | Quality | 3 | MEDIUM |
 | File Hierarchy | 2 | MEDIUM |
-| **Total** | **19** | — |
+| **Total** | **18** | — |

@@ -2,7 +2,9 @@
 
 ## Overview
 
-LLMs respond to the same persuasion principles as humans. Understanding this psychology helps you design more effective skills - not to manipulate, but to ensure critical practices are followed even under pressure.
+**Note: These are design hypotheses, not verified findings. The principles below are drawn from human persuasion research and applied to LLM skill design as working assumptions.**
+
+Understanding persuasion principles may help design more effective skills - not to manipulate, but to ensure critical practices are followed even under pressure.
 
 **Research foundation:** Meincke et al. (2025) tested 7 persuasion principles with N=28,000 AI conversations. Persuasion techniques more than doubled compliance rates (33% → 72%, p < .001).
 
@@ -144,11 +146,12 @@ LLMs respond to the same persuasion principles as humans. Understanding this psy
 - "When X, do Y" more effective than "generally do Y"
 - Reduces cognitive load on compliance
 
-**LLMs are parahuman:**
+**Working hypothesis — LLMs may exhibit parahuman patterns:**
 - Trained on human text containing these patterns
-- Authority language precedes compliance in training data
-- Commitment sequences (statement → action) frequently modeled
-- Social proof patterns (everyone does X) establish norms
+- Authority language often precedes compliance in training data
+- Commitment sequences (statement -> action) are frequently modeled
+- Social proof patterns (everyone does X) may establish norms
+- Whether these patterns operate the same way as in humans is unverified
 
 ## Ethical Use
 
@@ -174,7 +177,7 @@ LLMs respond to the same persuasion principles as humans. Understanding this psy
 - Tested 7 principles with N=28,000 LLM conversations
 - Compliance increased 33% → 72% with persuasion techniques
 - Authority, commitment, scarcity most effective
-- Validates parahuman model of LLM behavior
+- Suggests LLMs may respond to similar persuasion patterns (not conclusive)
 
 ## Quick Reference
 

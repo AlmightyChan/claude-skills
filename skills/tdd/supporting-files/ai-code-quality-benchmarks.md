@@ -18,19 +18,19 @@ Source: CodeRabbit 2025 analysis of AI-assisted codebases.
 
 Source: Veracode State of Software Security 2024-2025.
 
-| Vulnerability Category | AI Code Failure Rate | Human Baseline |
+| Vulnerability Category | AI Code Failure Rate | Human Baseline (estimated) |
 |---|---|---|
-| Overall security scan failure | 45% | ~30% |
-| XSS (Cross-Site Scripting) | 86% | ~40% |
-| Log injection | 88% | ~35% |
-| SQL injection | ~60% | ~25% |
-| Input validation gaps | ~70% | ~35% |
+| Overall security scan failure | 45% | ~30% (estimated) |
+| XSS (Cross-Site Scripting) | 86% | ~40% (estimated) |
+| Log injection | 88% | ~35% (estimated) |
+| SQL injection | ~60% | ~25% (estimated) |
+| Input validation gaps | ~70% | ~35% (estimated) |
 
 **Calibration note:** Security-sensitive code from AI requires dedicated sweep — the default failure rate is near coin-flip.
 
 ## Review Burden Metrics
 
-Sources: Faros AI engineering metrics, DORA 2024 report.
+Source: Faros AI engineering metrics.
 
 | Metric | Before AI Coding Tools | After AI Coding Tools |
 |---|---|---|
