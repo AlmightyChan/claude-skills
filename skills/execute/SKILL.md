@@ -1,6 +1,6 @@
 ---
 name: execute
-version: 1.2.0
+version: 1.2.1
 description: "Use when you have an implementation plan ready for agent-driven execution"
 argument-hint: [path to plan document]
 model: opus
@@ -81,6 +81,14 @@ PATH_TO_PLAN: $ARGUMENTS
      - After a task is skipped (resume): `TaskUpdate({ taskId: "{id}", status: "completed" })`
      - Use `TaskList({})` to review overall progress at phase boundaries or when re-reading state after compaction.
      These updates are in ADDITION to the build status file entries — both tracking systems must stay in sync.
+   - **Status table**: After creating all tasks and before dispatching the first one, render an initial status table in the conversation:
+     ```
+     | # | Task | Agent | Status | Notes |
+     |---|------|-------|--------|-------|
+     | 1 | <subject> | — | pending | — |
+     | 2 | <subject> | — | pending | — |
+     ```
+     Re-render the full table after each task completes, updating the row's status to `done`, `failed`, or `skipped`. Include a brief failure note for any task that did not pass. When all tasks have reported, render the final table with a one-line summary (e.g., "7/8 tasks passed — task-05 failed: validator timeout").
    - **Dispatch rules persistence**: At the start of execution, write a `## Dispatch Rules` header into `build-status--{plan-slug}.md` containing these critical rules:
      - Builder/validator pairs: dispatch builder, then validator. 3-strike retry on FAIL.
      - Topology-aware dispatch: read `## Project Topology` from plan. If present, use build unit analysis for parallelism. If absent, default to serial. Respect parallelism mode flag (`serial | topology | aggressive`).
@@ -114,6 +122,15 @@ PATH_TO_PLAN: $ARGUMENTS
      5. "Before starting, load domain-specific skills per `.claude/rules/subagent-skill-dispatch.md`. Scan your task description for domain signals (CI failure, security, performance, etc.) and invoke matching skills. Cap at 3 skills per task."
      6. If the task has a `Context Specs` field, treat it as equivalent to `Context Files` — read and apply the referenced spec documents before implementing.
      These constraints are placed in the dispatch prompt (not rules files) to survive context compaction and ensure every builder receives them regardless of loaded context.
+   - **Builder Constraints Template** (include verbatim in every builder dispatch prompt):
+     ```
+     BUILDER CONSTRAINTS:
+     - For Xcode source files: use `ToolSearch` to load `mcp__xcode__XcodeWrite`. Do NOT use generic `Write` for Xcode sources.
+     - For Xcode builds/tests: use `xcodebuild` via Bash piped through `xcsift`. Do NOT use `mcp__xcode__BuildProject` or `mcp__xcode__RunSomeTests`.
+     - Write bottom-up: define types before referencing them. Stub missing dependency types.
+     - Load domain-specific skills per `.claude/rules/subagent-skill-dispatch.md`. Cap at 3 skills per task.
+     ```
+     This template survives context compaction — it is included inline rather than loaded from supporting files.
    - **Builder/validator pairs**: After each completed pair, append a progress entry to `build-status--{plan-slug}.md` in the working directory using the build status entry format below. If a validator reports FAIL: re-read the failure details, re-dispatch the builder to fix, then re-dispatch the validator. If a task fails validation 3 times, stop and ask the user.
      - **Teammate mode**: If TEAMMATE_MODE: instead of AskUserQuestion, send via SendMessage:
        `SendMessage({ type: "message", recipient: "lead", content: "ESCALATION: {plan-slug}/{task-id} | strike 3/3 | {root cause}", summary: "3-strike failure {task-id}" })`

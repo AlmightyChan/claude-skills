@@ -1,6 +1,6 @@
 ---
 name: forge-execute
-version: 0.1.0
+version: 0.1.1
 description: "Multi-plan orchestrator for forge projects. Reads manifest, schedules tiers, spawns execute teammates, auto-merges."
 argument-hint: "[project-name]"
 model: opus
@@ -91,6 +91,14 @@ Agent({
 **Sonnet for teammates, Opus for lead.** Teammates are procedural orchestrators; complex decisions escalate to the lead. Branch name source: manifest Component Plans table `Branch` column.
 
 **5c. Monitor + Rolling Merge:**
+After spawning all tier teammates, render a plan status table in the conversation:
+```
+| Plan | Tier | Teammate | Status | Branch | Merged |
+|------|------|----------|--------|--------|--------|
+| <slug> | 1 | exec-<slug> | running | feat/<slug> | — |
+```
+Re-render the table after each `PLAN_COMPLETE` message with updated status and merge result (`merged` / `failed`). When all plans in the tier are merged, render the final tier table before advancing to the next tier.
+
 As teammates report via SendMessage:
 - On `PLAN_COMPLETE`: immediately run merge pipeline for that plan:
   1. Pre-merge build in worktree (using build command from manifest)
