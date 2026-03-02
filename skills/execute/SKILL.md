@@ -1,6 +1,6 @@
 ---
 name: execute
-version: 1.0.0
+version: 1.1.0
 description: "Use when you have an implementation plan ready for agent-driven execution"
 argument-hint: [path to plan document]
 model: opus
@@ -30,7 +30,9 @@ PATH_TO_PLAN: $ARGUMENTS
    - `topology`: parallelize across different build units only (recommended for multi-target/multi-module/monorepo projects).
    - `aggressive`: also parallelize within build units for interpreted languages using file-set independence (for Python, TypeScript projects).
 
-3. **Worktree isolation**: Check current branch with `git branch --show-current`.
+3. **Worktree isolation**:
+   - **Teammate mode**: If TEAMMATE_MODE (spawn prompt sets this): skip worktree creation. Use WORKTREE_PATH from spawn prompt. All paths are absolute within WORKTREE_PATH.
+   Check current branch with `git branch --show-current`.
    - If on `main` or `master`:
      - Follow `.claude/rules/worktree-conventions.md` for branch derivation, sanitization, creation, and dispatch path rules.
      - Derive branch name from plan file name (e.g., `docs/plan/add-auth.md` -> `feat/add-auth`).
@@ -110,8 +112,12 @@ PATH_TO_PLAN: $ARGUMENTS
      3. "Write bottom-up: define types before referencing them. If a type from a dependency task doesn't exist on disk yet, do not reference it — write a compilation-safe stub or defer to the dependency."
      4. If the task includes a `**Context Files**` field, prepend to the dispatch prompt: "Before starting, read the following reference document(s) and apply their decisions to your implementation: {context file paths}. For Brand OS documents: apply visual identity, voice/tone, motion, interaction patterns, and micro-copy guidelines specified there. For PRD documents: follow the functional requirements, behavioral specs (Given-When-Then), non-functional requirements, and technical constraints specified there. When both are loaded: the PRD defines WHAT to build and the Brand OS defines HOW it should look, sound, and feel."
      5. "Before starting, load domain-specific skills per `.claude/rules/subagent-skill-dispatch.md`. Scan your task description for domain signals (CI failure, security, performance, etc.) and invoke matching skills. Cap at 3 skills per task."
+     6. If the task has a `Context Specs` field, treat it as equivalent to `Context Files` — read and apply the referenced spec documents before implementing.
      These constraints are placed in the dispatch prompt (not rules files) to survive context compaction and ensure every builder receives them regardless of loaded context.
    - **Builder/validator pairs**: After each completed pair, append a progress entry to `build-status--{plan-slug}.md` in the working directory using the build status entry format below. If a validator reports FAIL: re-read the failure details, re-dispatch the builder to fix, then re-dispatch the validator. If a task fails validation 3 times, stop and ask the user.
+     - **Teammate mode**: If TEAMMATE_MODE: instead of AskUserQuestion, send via SendMessage:
+       `SendMessage({ type: "message", recipient: "lead", content: "ESCALATION: {plan-slug}/{task-id} | strike 3/3 | {root cause}", summary: "3-strike failure {task-id}" })`
+       Wait for lead's SendMessage response with instructions.
    - **Build status entry format**: Each task entry in `build-status--{plan-slug}.md` uses this format:
      ```
      ### {Task ID}
@@ -127,6 +133,9 @@ PATH_TO_PLAN: $ARGUMENTS
      1. "Clarify and re-dispatch builder" — provide clarification, re-dispatch with clarification appended to prompt
      2. "Proceed with builder's interpretation" — dispatch validator as normal
      3. "Abort this task" — skip task and validator, note in `build-status--{plan-slug}.md` as ABORTED
+     - **Teammate mode**: If TEAMMATE_MODE: instead of AskUserQuestion, send via SendMessage:
+       `SendMessage({ type: "message", recipient: "lead", content: "QUESTION: {plan-slug}/{task-id}: {extracted sentences}", summary: "Gap-flag from {task-id}" })`
+       Then continue to next task. Do NOT block — the lead will route the answer back via SendMessage, at which point re-dispatch the builder with the clarification.
    - **Decision log entry**: After gap-flagging resolution (either "Clarify and re-dispatch builder" or "Proceed with builder's interpretation"), append a decision log entry to `{project-dir}/docs/decision-log.md`:
      ```
      ## {YYYY-MM-DD} — {task-id}: {brief decision summary}
@@ -161,7 +170,9 @@ PATH_TO_PLAN: $ARGUMENTS
    - Instruction: "Execute every validation command. For the functional completeness sweep, read every file produced by the build and check for stub patterns. For the cross-task integration check, trace at least one end-to-end user flow across task boundaries."
    After the validator returns: if PASS, proceed to report. If FAIL, present findings and ask the user whether to remediate or proceed. Do NOT offer merge/PR/discard options until the user acknowledges any unmet criteria.
 
-8. **Document lifecycle**: After the acceptance gate passes (or the user acknowledges unmet criteria and chooses to proceed), manage the pipeline documents:
+8. **Document lifecycle**:
+   - **Teammate mode**: If TEAMMATE_MODE: skip this step entirely. The lead handles document lifecycle.
+   After the acceptance gate passes (or the user acknowledges unmet criteria and chooses to proceed), manage the pipeline documents:
    - Read `## Project Directory` from the plan. If the value is a project path (e.g., `projects/cadence`):
      1. Create `{project-dir}/docs/` if it doesn't exist.
      2. Identify all technical documents referenced in the plan's `## Relevant Files` section (PRDs, Brand OS, feature specs — files matching `prd-*.md`, `brand-os-*.md`, `feature-*.md`, `srd-*.md`, `architecture-*.md`, `service-*.md`).
@@ -175,7 +186,11 @@ PATH_TO_PLAN: $ARGUMENTS
    - Report all file moves to the user in the report step.
    - **Worktree consideration**: If executing in a worktree, perform document moves in the worktree. They will be included in the merge.
 
-9. **Report and ship**: Present results with: tasks completed, files changed, verification results, document moves performed, worktree location.
+9. **Report and ship**:
+   - **Teammate mode**: If TEAMMATE_MODE: instead of the PR/keep/discard flow, send completion report:
+     `SendMessage({ type: "message", recipient: "lead", content: "PLAN_COMPLETE: {plan-slug} | {N}/{M} tasks PASS | merge ready", summary: "Plan {plan-slug} complete" })`
+     Then stop. Do not create PRs or merge branches.
+   Present results with: tasks completed, files changed, verification results, document moves performed, worktree location.
    - Use AskUserQuestion to offer shipping options:
      1. "Create PR (Recommended)" — commit all changes on the feature branch, push to origin, create a PR targeting main, and clean up the worktree. This is the standard workflow for reviewed changes.
      2. "Keep branch" — leave the worktree and branch as-is for further work.

@@ -44,6 +44,7 @@
 ## Execution Strategy
 - **Parallelism Mode:** <topology | aggressive>
 - **Worktree Cap:** WORKTREE_CAP concurrent (system cap is WORKTREE_CAP + 1 including main; tiers exceeding cap are batched)
+- **Build Command:** {project build command, e.g., `xcodebuild build -scheme App` or `pnpm run build`}
 - **Merge Order:** Foundation first, then tiers in order, then integration
 - **Merge Protocol:** Build verification after each merge. Conflicts escalate to user.
 - **Rollback:** If merge fails, revert merge, re-execute plan against current main, retry.
